@@ -10,6 +10,6 @@ export const getQuizQuestions = async (): Promise<QuestionData> => {
 
     return await response.json();
   } catch (e) {
-    throw new Error("Error fetching questions: " + e);
+    throw new Error(`Error fetching questions: ${e}`);
   }
 };

@@ -1,4 +1,4 @@
-export interface AnswerOptions {
+export interface AnswerOption {
   id: number;
   choices: string[];
   correctIndex: number;
@@ -7,7 +7,7 @@ export interface AnswerOptions {
 export interface Question {
   id: number;
   question: string;
-  options: AnswerOptions[];
+  options: AnswerOption[];
 }
 
 export interface QuestionData {
