@@ -1,29 +1,27 @@
-import { useEffect, useState } from "react";
 import { getQuizQuestions } from "../../api/getQuizQuestions";
-import { Question } from "../../types";
+import { QuestionData } from "../../types";
+import { useQuery } from "@tanstack/react-query";
 
 export const Questions = () => {
-  const [questionData, setQuestionData] = useState<Question[]>([]);
+  const { data, isError, isLoading } = useQuery<QuestionData>({
+    queryKey: ["quizQuestions"],
+    queryFn: getQuizQuestions,
+  });
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const data = await getQuizQuestions(); // Fetch data
-        setQuestionData(data.questions); // Update state
-      } catch (error) {
-        console.error("Error fetching quiz questions:", error);
-      }
-    };
+  if (isLoading) return <div>Loading...</div>;
+  if (isError)
+    return (
+      <div className="text-red-700">
+        Error loading question data. Please try again later!
+      </div>
+    );
 
-    fetchQuestions();
-  }, []);
-
-  if (questionData.length === 0) return <p>Loading questions...</p>;
+  const questions = data?.questions;
 
   return (
     <div>
-      {questionData.map((question: Question, index: number) => (
-        <h1 key={index}>{question.question}</h1>
+      {questions?.map((question) => (
+        <h1 key={question.id}>{question.question}</h1>
       ))}
     </div>
   );
