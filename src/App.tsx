@@ -1,4 +1,3 @@
-import "./App.css";
 import { Questions } from "./components/Questions/Questions";
 
 function App() {

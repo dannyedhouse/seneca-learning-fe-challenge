@@ -44,15 +44,24 @@ export const Questions = () => {
   }
 
   return (
-    <div className="md:rounded-xl" style={{ background: gradientStyle }}>
-      <h1 className="text-white font-bold text-[20px] sm:text-[40px] leading-[56px] tracking-[0px]">
-        {currentQuestion?.question}
-      </h1>
-      <OptionsContainer
-        options={currentQuestion?.options ?? []}
-        selectedOptions={selectedOptions}
-        onChange={handleToggleOption}
-      />
+    <div
+      className="py-4 px-4 md:mx-4 md:p-12 md:rounded-xl text-center"
+      style={{ background: gradientStyle }}
+    >
+      <div className="flex flex-col items-center justify-center gap-8 w-full">
+        <h1 className="text-white font-bold text-[20px] sm:text-[40px] leading-[56px] tracking-[0px]">
+          {currentQuestion?.question}
+        </h1>
+
+        <div className="flex flex-col gap-8 md:gap-6 w-full">
+          <OptionsContainer
+            options={currentQuestion?.options ?? []}
+            selectedOptions={selectedOptions}
+            onChange={handleToggleOption}
+            allCorrect={allCorrect}
+          />
+        </div>
+      </div>
       <h2 className="text-white font-bold text-[16px] sm:text-[32px] leading-[44.8px] tracking-[0px]">
         The answer is {allCorrect ? "correct!" : "incorrect"}
       </h2>

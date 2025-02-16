@@ -4,12 +4,14 @@ interface OptionSwitchProps {
   choices: string[];
   selectedIndex: number | undefined;
   onToggle: (index: number) => void;
+  allCorrect: boolean;
 }
 
 export const OptionSwitch = ({
   choices,
   selectedIndex,
   onToggle,
+  allCorrect,
 }: OptionSwitchProps) => {
   return (
     <div
@@ -21,6 +23,7 @@ export const OptionSwitch = ({
           key={index}
           onClick={() => onToggle(index)}
           className={`relative z-10 flex-1 text-center px-4 py-2 font-semibold transition-all text-white`}
+          disabled={allCorrect}
         >
           {choice}
         </button>
