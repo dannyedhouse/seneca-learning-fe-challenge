@@ -1,0 +1,42 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "An animal cell contains:",
+      "options": [
+        { "id": 101, "choices": ["Cell wall", "Ribosomes"], "correctIndex": 1 },
+        {
+          "id": 102,
+          "choices": ["Cytoplasm", "Chloroplast"],
+          "correctIndex": 0
+        },
+        {
+          "id": 103,
+          "choices": ["Partially permeable membrane", "Impermeable membrane"],
+          "correctIndex": 0
+        },
+        {
+          "id": 104,
+          "choices": ["Cellulose", "Mitochondria"],
+          "correctIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "question": "Which are the best sports people & teams?",
+      "options": [
+        {
+          "id": 201,
+          "choices": ["Liverpool", "Chelsea", "Man Utd"],
+          "correctIndex": 0
+        },
+        {
+          "id": 202,
+          "choices": ["Serena Williams", "Naomi Osaka"],
+          "correctIndex": 0
+        }
+      ]
+    }
+  ]
+}
