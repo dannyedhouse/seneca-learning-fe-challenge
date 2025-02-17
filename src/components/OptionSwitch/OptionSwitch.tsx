@@ -30,7 +30,7 @@ export const OptionSwitch = ({
             onClick={() => onToggle(index)}
             className={`relative z-10 flex-1 text-center px-4 py-4 font-semibold transition-all 
                text-[18px] md:text-2xl `}
-            style={{ color: isActive ? activeTextColor : "rgb(255, 255, 255)" }} // Use RGB color for active state
+            style={{ color: isActive ? activeTextColor : "rgb(255, 255, 255)" }}
             disabled={allCorrect}
           >
             {choice}
