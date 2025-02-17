@@ -7,6 +7,7 @@ interface OptionSwitchProps {
   onToggle: (index: number) => void;
   allCorrect: boolean;
   maxWidth: number;
+  isWrapped: boolean;
 }
 
 export const OptionSwitch = ({
@@ -16,10 +17,13 @@ export const OptionSwitch = ({
   onToggle,
   allCorrect,
   maxWidth,
+  isWrapped,
 }: OptionSwitchProps) => {
   return (
     <div
-      className="border-2 border-white border-opacity-20 relative flex items-center rounded-full w-full"
+      className={`border-2 border-white border-opacity-20 relative flex ${
+        isWrapped ? "flex-col" : "flex-row"
+      } items-center rounded-full w-full`}
       style={{ maxWidth }}
     >
       {choices.map((choice, index) => {
@@ -39,11 +43,15 @@ export const OptionSwitch = ({
       })}
       <motion.div
         className="absolute h-[calc(100%-0px)] bg-white/40 rounded-full z-0"
-        style={{ width: `${100 / choices.length}%` }}
-        animate={{
-          x: selectedIndex !== undefined ? `${selectedIndex * 100}%` : 0,
-          opacity: 1,
+        style={{
+          width: isWrapped ? "100%" : `${100 / choices.length}%`,
+          height: isWrapped ? `${100 / choices.length}%` : "100%",
         }}
+        animate={
+          isWrapped
+            ? { y: selectedIndex !== undefined ? `${selectedIndex * 100}%` : 0 }
+            : { x: selectedIndex !== undefined ? `${selectedIndex * 100}%` : 0 }
+        }
         initial={{ opacity: 0.4 }}
         transition={{ type: "spring", stiffness: 400, damping: 50 }}
       />
