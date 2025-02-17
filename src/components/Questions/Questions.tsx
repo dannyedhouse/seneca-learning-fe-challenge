@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { getQuizQuestions } from "../../api/getQuizQuestions";
-import { Choice, QuestionData, SelectedAnswers } from "../../types";
 import { useQuery } from "@tanstack/react-query";
+import { Question, QuestionData } from "../../types";
 import { OptionsContainer } from "../OptionsContainer/OptionsContainer";
 import { useCorrectness } from "../../hooks/useCorrectness";
 import { getGradientStyle } from "../../utils/getGradientStyle";
 import { getTextColor } from "../../utils/getTextColour";
+import { getQuizQuestions } from "../../api/getQuizQuestions";
+import { useState, useEffect } from "react";
+import { useSelectOptions } from "../../hooks/useSelectOption";
+import { getRandomisedQuestions } from "../../utils/getRandomisedQuestions";
 
 export const Questions = () => {
   const { data, isError, isLoading } = useQuery<QuestionData>({
@@ -13,13 +15,31 @@ export const Questions = () => {
     queryFn: getQuizQuestions,
   });
 
-  const [currentQuestionIndex] = useState(0);
-  const [selectedChoices, setSelectedChoices] = useState<SelectedAnswers>({});
+  const [randomizedQuestions, setRandomizedQuestions] = useState<Question[]>(
+    []
+  );
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  useEffect(() => {
+    if (data) {
+      setRandomizedQuestions(getRandomisedQuestions(data));
+    }
+  }, [data]);
+
+  const currentQuestion = randomizedQuestions[currentQuestionIndex];
+  const { randomisedOptions, selectedChoices, handleToggleOption } =
+    useSelectOptions(currentQuestion);
 
   const { percentage, allCorrect } = useCorrectness(
     selectedChoices,
-    data?.questions[0]!.answerOptions ?? []
+    randomisedOptions ?? []
   );
+
+  const goToNextQuestion = () => {
+    setCurrentQuestionIndex((prev) =>
+      prev < randomizedQuestions.length - 1 ? prev + 1 : 0
+    );
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError)
@@ -28,37 +48,14 @@ export const Questions = () => {
         Error loading question data. Please try again later!
       </div>
     );
-
-  const handleToggleOption = (answerOptionId: number, choice: Choice) => {
-    setSelectedChoices((prev) => {
-      if (prev[answerOptionId]?.id === choice.id) {
-        const { [answerOptionId]: _, ...rest } = prev;
-        return rest;
-      }
-      return {
-        ...prev,
-        [answerOptionId]: choice,
-      };
-    });
-  };
-
-  const questions = data?.questions ?? [];
-  const hasQuestions = questions.length > 0;
-  const currentQuestion = questions[currentQuestionIndex];
+  if (!randomizedQuestions.length) return <p>No questions available</p>;
 
   const gradientStyle = getGradientStyle(percentage);
   const textColor = getTextColor(percentage);
 
-  if (!hasQuestions) {
-    return <p>No questions available</p>;
-  }
-
-  console.log(selectedChoices);
-  console.log(percentage);
-
   return (
     <div
-      className="py-4 px-4 md:mx-4 md:p-12 md:rounded-xl text-center"
+      className="py-4 px-4 md:mx-4 md:p-12 md:rounded-xl text-center "
       style={{ background: gradientStyle }}
     >
       <div className="flex flex-col items-center justify-center gap-8 w-full">
@@ -67,7 +64,7 @@ export const Questions = () => {
         </h1>
         <OptionsContainer
           activeTextColor={textColor}
-          options={currentQuestion?.answerOptions ?? []}
+          options={randomisedOptions}
           selectedChoices={selectedChoices}
           onChange={handleToggleOption}
           allCorrect={allCorrect}
@@ -76,6 +73,12 @@ export const Questions = () => {
       <h2 className="text-white font-bold text-[16px] sm:text-[32px]">
         The answer is {allCorrect ? "correct!" : "incorrect"}
       </h2>
+      <button
+        onClick={goToNextQuestion}
+        className="m-8 rounded-full px-6 py-4 bg-white/40 hover:bg-white/50 text-white font-semibold text-lg"
+      >
+        Next Question
+      </button>
     </div>
   );
 };
