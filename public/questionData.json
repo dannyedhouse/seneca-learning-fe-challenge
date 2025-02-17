@@ -37,6 +37,27 @@
           "correctIndex": 0
         }
       ]
+    },
+    {
+      "id": 3,
+      "question": "What are the ideal conditions inside an office?",
+      "options": [
+        {
+          "id": 301,
+          "choices": ["Good pay", "Bad pay"],
+          "correctIndex": 0
+        },
+        {
+          "id": 302,
+          "choices": ["Lot of meetings", "Less meetings"],
+          "correctIndex": 1
+        },
+        {
+          "id": 303,
+          "choices": ["Bear in office", "Dog in office"],
+          "correctIndex": 1
+        }
+      ]
     }
   ]
 }
