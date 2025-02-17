@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getQuizQuestions } from "../../api/getQuizQuestions";
-import { QuestionData } from "../../types";
+import { Choice, QuestionData, SelectedAnswers } from "../../types";
 import { useQuery } from "@tanstack/react-query";
 import { OptionsContainer } from "../OptionsContainer/OptionsContainer";
 import { useCorrectness } from "../../hooks/useCorrectness";
@@ -14,10 +14,11 @@ export const Questions = () => {
   });
 
   const [currentQuestionIndex] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+  const [selectedChoices, setSelectedChoices] = useState<SelectedAnswers>({});
+
   const { percentage, allCorrect } = useCorrectness(
-    selectedOptions,
-    data?.questions[0]?.options ?? []
+    selectedChoices,
+    data?.questions[0]!.answerOptions ?? []
   );
 
   if (isLoading) return <div>Loading...</div>;
@@ -28,10 +29,17 @@ export const Questions = () => {
       </div>
     );
 
-  const handleToggleOption = (optionIndex: number, selectedIndex: number) => {
-    const newSelections = [...selectedOptions];
-    newSelections[optionIndex] = selectedIndex;
-    setSelectedOptions(newSelections);
+  const handleToggleOption = (answerOptionId: number, choice: Choice) => {
+    setSelectedChoices((prev) => {
+      if (prev[answerOptionId]?.id === choice.id) {
+        const { [answerOptionId]: _, ...rest } = prev;
+        return rest;
+      }
+      return {
+        ...prev,
+        [answerOptionId]: choice,
+      };
+    });
   };
 
   const questions = data?.questions ?? [];
@@ -45,24 +53,27 @@ export const Questions = () => {
     return <p>No questions available</p>;
   }
 
+  console.log(selectedChoices);
+  console.log(percentage);
+
   return (
     <div
       className="py-4 px-4 md:mx-4 md:p-12 md:rounded-xl text-center"
       style={{ background: gradientStyle }}
     >
       <div className="flex flex-col items-center justify-center gap-8 w-full">
-        <h1 className="text-white font-bold text-[20px] sm:text-[40px] leading-[56px] tracking-[0px]">
+        <h1 className="text-white font-bold text-[20px] sm:text-[40px]">
           {currentQuestion?.question}
         </h1>
         <OptionsContainer
           activeTextColor={textColor}
-          options={currentQuestion?.options ?? []}
-          selectedOptions={selectedOptions}
+          options={currentQuestion?.answerOptions ?? []}
+          selectedChoices={selectedChoices}
           onChange={handleToggleOption}
           allCorrect={allCorrect}
         />
       </div>
-      <h2 className="text-white font-bold text-[16px] sm:text-[32px] leading-[44.8px] tracking-[0px]">
+      <h2 className="text-white font-bold text-[16px] sm:text-[32px]">
         The answer is {allCorrect ? "correct!" : "incorrect"}
       </h2>
     </div>

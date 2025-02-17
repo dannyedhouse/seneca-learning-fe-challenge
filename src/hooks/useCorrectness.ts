@@ -1,23 +1,28 @@
 import { useMemo } from "react";
-import { AnswerOption } from "../types";
+import { AnswerOption, SelectedAnswers } from "../types";
 
 export const useCorrectness = (
-  selectedOptions: number[],
+  selectedAnswers: SelectedAnswers,
   options: AnswerOption[]
 ) => {
   return useMemo(() => {
-    if (selectedOptions.length === 0 || options.length === 0) {
+    if (options.length === 0) {
       return { percentage: 0, allCorrect: false };
     }
 
-    const totalOptions = options.length;
-    const correctAnswers = options.reduce((count, opt, index) => {
-      return count + (selectedOptions[index] === opt.correctIndex ? 1 : 0);
-    }, 0);
+    const totalQuestions = options.length;
+    let correctAnswers = 0;
 
-    const percentage = correctAnswers / totalOptions;
-    const allCorrect = correctAnswers === totalOptions;
+    options.forEach((answerOption) => {
+      const selectedChoice = selectedAnswers[answerOption.id];
+      if (selectedChoice?.isCorrect) {
+        correctAnswers++;
+      }
+    });
+
+    const percentage = correctAnswers / totalQuestions;
+    const allCorrect = correctAnswers === totalQuestions;
 
     return { percentage, allCorrect };
-  }, [selectedOptions, options]);
+  }, [selectedAnswers, options]);
 };

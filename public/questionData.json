@@ -3,59 +3,86 @@
     {
       "id": 1,
       "question": "An animal cell contains:",
-      "options": [
-        { "id": 101, "choices": ["Cell wall", "Ribosomes"], "correctIndex": 1 },
+      "answerOptions": [
+        {
+          "id": 101,
+          "choices": [
+            { "id": 1, "text": "Cell wall", "isCorrect": false },
+            { "id": 2, "text": "Ribosomes", "isCorrect": true }
+          ]
+        },
         {
           "id": 102,
-          "choices": ["Cytoplasm", "Chloroplast"],
-          "correctIndex": 0
+          "choices": [
+            { "id": 3, "text": "Cytoplasm", "isCorrect": true },
+            { "id": 4, "text": "Chloroplast", "isCorrect": false }
+          ]
         },
         {
           "id": 103,
-          "choices": ["Partially permeable membrane", "Impermeable membrane"],
-          "correctIndex": 0
+          "choices": [
+            {
+              "id": 5,
+              "text": "Partially permeable membrane",
+              "isCorrect": true
+            },
+            { "id": 6, "text": "Impermeable membrane", "isCorrect": false }
+          ]
         },
         {
           "id": 104,
-          "choices": ["Cellulose", "Mitochondria"],
-          "correctIndex": 1
+          "choices": [
+            { "id": 7, "text": "Cellulose", "isCorrect": false },
+            { "id": 8, "text": "Mitochondria", "isCorrect": true }
+          ]
         }
       ]
     },
     {
       "id": 2,
       "question": "Which are the best sports people & teams?",
-      "options": [
+      "answerOptions": [
         {
           "id": 201,
-          "choices": ["Liverpool", "Chelsea", "Man Utd"],
-          "correctIndex": 0
+          "choices": [
+            { "id": 9, "text": "Liverpool", "isCorrect": true },
+            { "id": 10, "text": "Chelsea", "isCorrect": false },
+            { "id": 11, "text": "Man Utd", "isCorrect": false }
+          ]
         },
         {
           "id": 202,
-          "choices": ["Serena Williams", "Naomi Osaka"],
-          "correctIndex": 0
+          "choices": [
+            { "id": 12, "text": "Serena Williams", "isCorrect": true },
+            { "id": 13, "text": "Naomi Osaka", "isCorrect": false }
+          ]
         }
       ]
     },
     {
       "id": 3,
       "question": "What are the ideal conditions inside an office?",
-      "options": [
+      "answerOptions": [
         {
           "id": 301,
-          "choices": ["Good pay", "Bad pay"],
-          "correctIndex": 0
+          "choices": [
+            { "id": 14, "text": "Good pay", "isCorrect": true },
+            { "id": 15, "text": "Bad pay", "isCorrect": false }
+          ]
         },
         {
           "id": 302,
-          "choices": ["Lot of meetings", "Less meetings"],
-          "correctIndex": 1
+          "choices": [
+            { "id": 16, "text": "Lot of meetings", "isCorrect": false },
+            { "id": 17, "text": "Less meetings", "isCorrect": true }
+          ]
         },
         {
           "id": 303,
-          "choices": ["Bear in office", "Dog in office"],
-          "correctIndex": 1
+          "choices": [
+            { "id": 18, "text": "Bear in office", "isCorrect": false },
+            { "id": 19, "text": "Dog in office", "isCorrect": true }
+          ]
         }
       ]
     }

@@ -1,39 +1,42 @@
 import { OptionSwitch } from "../OptionSwitch/OptionSwitch";
-import { AnswerOption } from "../../types";
+import { AnswerOption, Choice } from "../../types";
 import { useMemo } from "react";
 
 interface OptionsContainerProps {
   activeTextColor: string;
   options: AnswerOption[];
-  selectedOptions: number[];
-  onChange: (optionIndex: number, selectedIndex: number) => void;
+  selectedChoices: Record<number, Choice>;
+  onChange: (answerOptionId: number, choice: Choice) => void;
   allCorrect: boolean;
 }
 
 export const OptionsContainer = ({
   activeTextColor,
   options,
-  selectedOptions,
+  selectedChoices,
   onChange,
   allCorrect,
 }: OptionsContainerProps) => {
   const maxWidth = useMemo(() => {
     const longestChoice = options
       .flatMap((option) => option.choices)
-      .reduce((max, choice) => (choice.length > max ? choice.length : max), 0);
+      .reduce(
+        (max, choice) => (choice.text.length > max ? choice.text.length : max),
+        0
+      );
 
     return longestChoice * 35 + 40;
   }, [options]);
 
   return (
     <div className="flex flex-col gap-8 md:gap-4 mb-8 w-full items-center">
-      {options.map((option, index) => (
+      {options.map((option) => (
         <OptionSwitch
           activeTextColor={activeTextColor}
           key={option.id}
           choices={option.choices}
-          selectedIndex={selectedOptions[index]}
-          onToggle={(selectedIndex) => onChange(index, selectedIndex)}
+          selectedChoice={selectedChoices[option.id]}
+          onToggle={(selectedIndex) => onChange(option.id, selectedIndex)}
           allCorrect={allCorrect}
           maxWidth={maxWidth}
         />

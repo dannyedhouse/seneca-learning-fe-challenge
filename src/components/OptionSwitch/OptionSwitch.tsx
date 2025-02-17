@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
+import { Choice } from "../../types";
 
 interface OptionSwitchProps {
   activeTextColor: string;
-  choices: string[];
-  selectedIndex: number | undefined;
-  onToggle: (index: number) => void;
+  choices: Choice[];
+  selectedChoice: Choice | undefined;
+  onToggle: (choice: Choice) => void;
   allCorrect: boolean;
   maxWidth: number;
 }
@@ -13,7 +14,7 @@ interface OptionSwitchProps {
 export const OptionSwitch = ({
   activeTextColor,
   choices,
-  selectedIndex,
+  selectedChoice,
   onToggle,
   allCorrect,
   maxWidth,
@@ -39,36 +40,41 @@ export const OptionSwitch = ({
     return () => observer.disconnect();
   }, [choices]);
 
+  const selectedIndex = choices.findIndex(
+    (choice) => choice.id === selectedChoice?.id
+  );
+
   return (
     <div
-      className={`border-2 border-white border-opacity-20 relative flex flex-wrap gap-2 rounded-full w-full`}
+      className="border-2 border-white border-opacity-20 relative flex flex-wrap gap-2 rounded-full w-full"
       style={{ maxWidth }}
+      ref={containerRef}
     >
-      {choices.map((choice, index) => {
-        const isActive = selectedIndex === index;
+      {choices.map((choice) => {
+        const isActive = choice.id === selectedChoice?.id;
         return (
           <button
-            key={index}
-            onClick={() => onToggle(index)}
-            className={`relative z-10 flex-[1_1_50%] w-full flex-wrap text-center px-4 py-4 font-semibold transition-all 
-               text-[18px] md:text-2xl `}
+            key={choice.id}
+            onClick={() => onToggle(choice)}
+            className="relative z-10 text-center px-4 py-4 font-semibold transition-all 
+               text-[18px] md:text-2xl flex-[1_1_auto]"
             style={{ color: isActive ? activeTextColor : "rgb(255, 255, 255)" }}
             disabled={allCorrect}
           >
-            {choice}
+            {choice.text}
           </button>
         );
       })}
       <motion.div
-        className="absolute h-[calc(100%-0px)] bg-white/40 rounded-full z-0"
+        className="absolute bg-white/40 rounded-full z-0"
         style={{
           width: isWrapped ? "100%" : `${100 / choices.length}%`,
           height: isWrapped ? `${100 / choices.length}%` : "100%",
         }}
         animate={
           isWrapped
-            ? { y: selectedIndex !== undefined ? `${selectedIndex * 100}%` : 0 }
-            : { x: selectedIndex !== undefined ? `${selectedIndex * 100}%` : 0 }
+            ? { y: selectedIndex >= 0 ? `${selectedIndex * 100}%` : 0 }
+            : { x: selectedIndex >= 0 ? `${selectedIndex * 100}%` : 0 }
         }
         initial={{ opacity: 1 }}
         transition={{ type: "spring", stiffness: 400, damping: 50 }}
