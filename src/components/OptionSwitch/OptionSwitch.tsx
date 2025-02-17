@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
 
 interface OptionSwitchProps {
   activeTextColor: string;
@@ -7,7 +8,6 @@ interface OptionSwitchProps {
   onToggle: (index: number) => void;
   allCorrect: boolean;
   maxWidth: number;
-  isWrapped: boolean;
 }
 
 export const OptionSwitch = ({
@@ -17,13 +17,31 @@ export const OptionSwitch = ({
   onToggle,
   allCorrect,
   maxWidth,
-  isWrapped,
 }: OptionSwitchProps) => {
+  const [isWrapped, setIsWrapped] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const observer = new ResizeObserver(() => {
+      if (!containerRef.current) return;
+
+      const firstRow = containerRef.current.querySelector("button");
+      if (!firstRow) return;
+
+      const isNowWrapped =
+        containerRef.current.clientHeight > firstRow.clientHeight * 1.5;
+      setIsWrapped(isNowWrapped);
+    });
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [choices]);
+
   return (
     <div
-      className={`border-2 border-white border-opacity-20 relative flex ${
-        isWrapped ? "flex-col" : "flex-row"
-      } items-center rounded-full w-full`}
+      className={`border-2 border-white border-opacity-20 relative flex flex-wrap gap-2 rounded-full w-full`}
       style={{ maxWidth }}
     >
       {choices.map((choice, index) => {
@@ -32,7 +50,7 @@ export const OptionSwitch = ({
           <button
             key={index}
             onClick={() => onToggle(index)}
-            className={`relative z-10 flex-1 text-center px-4 py-4 font-semibold transition-all 
+            className={`relative z-10 flex-[1_1_50%] w-full flex-wrap text-center px-4 py-4 font-semibold transition-all 
                text-[18px] md:text-2xl `}
             style={{ color: isActive ? activeTextColor : "rgb(255, 255, 255)" }}
             disabled={allCorrect}
@@ -52,7 +70,7 @@ export const OptionSwitch = ({
             ? { y: selectedIndex !== undefined ? `${selectedIndex * 100}%` : 0 }
             : { x: selectedIndex !== undefined ? `${selectedIndex * 100}%` : 0 }
         }
-        initial={{ opacity: 0.4 }}
+        initial={{ opacity: 1 }}
         transition={{ type: "spring", stiffness: 400, damping: 50 }}
       />
     </div>
