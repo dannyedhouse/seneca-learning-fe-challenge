@@ -19,7 +19,7 @@ export const OptionSwitch = ({
 }: OptionSwitchProps) => {
   return (
     <div
-      className="border-2 border-white border-opacity-20 relative flex items-center rounded-full "
+      className="border-2 border-white border-opacity-20 relative flex items-center rounded-full w-full"
       style={{ maxWidth }}
     >
       {choices.map((choice, index) => {

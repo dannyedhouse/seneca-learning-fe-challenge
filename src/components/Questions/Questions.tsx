@@ -54,16 +54,13 @@ export const Questions = () => {
         <h1 className="text-white font-bold text-[20px] sm:text-[40px] leading-[56px] tracking-[0px]">
           {currentQuestion?.question}
         </h1>
-
-        <div className="flex flex-col w-full gap-8 md:gap-4">
-          <OptionsContainer
-            activeTextColor={textColor}
-            options={currentQuestion?.options ?? []}
-            selectedOptions={selectedOptions}
-            onChange={handleToggleOption}
-            allCorrect={allCorrect}
-          />
-        </div>
+        <OptionsContainer
+          activeTextColor={textColor}
+          options={currentQuestion?.options ?? []}
+          selectedOptions={selectedOptions}
+          onChange={handleToggleOption}
+          allCorrect={allCorrect}
+        />
       </div>
       <h2 className="text-white font-bold text-[16px] sm:text-[32px] leading-[44.8px] tracking-[0px]">
         The answer is {allCorrect ? "correct!" : "incorrect"}

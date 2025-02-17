@@ -22,11 +22,11 @@ export const OptionsContainer = ({
       .flatMap((option) => option.choices)
       .reduce((max, choice) => (choice.length > max ? choice.length : max), 0);
 
-    return longestChoice * 30 + 40;
+    return longestChoice * 35 + 40;
   }, [options]);
 
   return (
-    <div className="flex flex-col gap-8 md:gap-4 mb-8">
+    <div className="flex flex-col gap-8 md:gap-4 mb-8 w-full items-center">
       {options.map((option, index) => (
         <OptionSwitch
           activeTextColor={activeTextColor}
