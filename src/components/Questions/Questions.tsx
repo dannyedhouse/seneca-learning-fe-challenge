@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { OptionsContainer } from "../OptionsContainer/OptionsContainer";
 import { useCorrectness } from "../../hooks/useCorrectness";
 import { getGradientStyle } from "../../utils/getGradientStyle";
+import { getTextColor } from "../../utils/getTextColour";
 
 export const Questions = () => {
   const { data, isError, isLoading } = useQuery<QuestionData>({
@@ -38,6 +39,7 @@ export const Questions = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   const gradientStyle = getGradientStyle(percentage);
+  const textColor = getTextColor(percentage);
 
   if (!hasQuestions) {
     return <p>No questions available</p>;
@@ -53,8 +55,9 @@ export const Questions = () => {
           {currentQuestion?.question}
         </h1>
 
-        <div className="flex flex-col gap-8 md:gap-6 w-full">
+        <div className="flex flex-col w-full gap-8 md:gap-4">
           <OptionsContainer
+            activeTextColor={textColor}
             options={currentQuestion?.options ?? []}
             selectedOptions={selectedOptions}
             onChange={handleToggleOption}

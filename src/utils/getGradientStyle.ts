@@ -3,7 +3,6 @@ import { interpolateHSL } from "./interpolateHSL";
 const createColor = (h: number, s: number, l: number) => ({ h, s, l });
 
 export const getGradientStyle = (percentage: number): string => {
-  // Create 3 color ranges based on the figma gradients:
   const incorrectStartColorLower = createColor(38, 90, 65); // #F6B868
   const incorrectEndColorLower = createColor(18, 85, 55); // #EE6B2D
   const incorrectStartColorUpper = createColor(20, 70, 75); // #F1B496
