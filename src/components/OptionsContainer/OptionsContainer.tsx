@@ -29,7 +29,7 @@ export const OptionsContainer = ({
   }, [options]);
 
   return (
-    <div className="flex flex-col gap-8 md:gap-4 mb-8 w-full items-center">
+    <div className="flex flex-col gap-8 md:gap-6 w-full items-center">
       {options.map((option) => (
         <OptionSwitch
           activeTextColor={activeTextColor}

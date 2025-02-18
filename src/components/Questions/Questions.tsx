@@ -43,7 +43,7 @@ export const Questions = () => {
 
   if (isLoading || isError || !randomizedQuestions.length) {
     return (
-      <div className="text-red-700 h-screen flex items-center justify-center text-xl font-semibold ">
+      <div className="text-red-700 h-screen flex items-center justify-center text-xl font-bold ">
         {isLoading
           ? "Loading..."
           : isError
@@ -61,7 +61,7 @@ export const Questions = () => {
       className="py-4 px-4 md:mx-4 md:p-12 md:rounded-xl text-center "
       style={{ background: gradientStyle }}
     >
-      <div className="flex flex-col items-center justify-center gap-8 w-full">
+      <div className="flex flex-col items-center justify-center gap-8 md:gap-10 w-full">
         <h1 className="text-white font-bold text-[20px] sm:text-[40px]">
           {currentQuestion?.question}
         </h1>
@@ -72,10 +72,11 @@ export const Questions = () => {
           onChange={handleToggleOption}
           allCorrect={allCorrect}
         />
+        <h2 className="text-white font-bold text-[16px] sm:text-[32px]">
+          The answer is {allCorrect ? "correct!" : "incorrect"}
+        </h2>
       </div>
-      <h2 className="text-white font-bold text-[16px] sm:text-[32px]">
-        The answer is {allCorrect ? "correct!" : "incorrect"}
-      </h2>
+
       <button
         onClick={goToNextQuestion}
         className="text-sm m-8 rounded-full px-6 py-4 bg-white/40 hover:bg-white/30 text-white font-semibold md:text-lg"
