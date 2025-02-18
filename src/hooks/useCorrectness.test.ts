@@ -1,34 +1,10 @@
 import { renderHook } from "@testing-library/react";
 import { useCorrectness } from "../hooks/useCorrectness";
-import { AnswerOption, SelectedAnswers } from "../types";
+import { SelectedAnswers } from "../types";
 import { describe, expect, test } from "vitest";
+import { mockOptions } from "../__mocks__/mockData";
 
 describe("useCorrectness hook", () => {
-  const mockOptions: AnswerOption[] = [
-    {
-      id: 1,
-      choices: [
-        { id: 1, text: "Cell wall", isCorrect: true },
-        { id: 2, text: "Ribosomes", isCorrect: false },
-        { id: 3, text: "Chloroplast", isCorrect: false },
-      ],
-    },
-    {
-      id: 2,
-      choices: [
-        { id: 4, text: "Partially permeable membrane", isCorrect: false },
-        { id: 5, text: "Impermeable membrane", isCorrect: true },
-      ],
-    },
-    {
-      id: 3,
-      choices: [
-        { id: 6, text: "Cellulose", isCorrect: false },
-        { id: 7, text: "Mitochondria", isCorrect: true },
-      ],
-    },
-  ];
-
   test("returns 0% correctness when no options are selected", () => {
     const selectedAnswers: SelectedAnswers = {};
     const { result } = renderHook(() =>
@@ -41,9 +17,10 @@ describe("useCorrectness hook", () => {
 
   test("returns 0% correctness when all answers are incorrect", () => {
     const selectedAnswers: SelectedAnswers = {
-      1: { id: 2, text: "Ribosomes", isCorrect: false },
-      2: { id: 4, text: "Partially permeable membrane", isCorrect: false },
-      3: { id: 6, text: "Cellulose", isCorrect: false },
+      101: { id: 1, text: "Cell wall", isCorrect: false },
+      102: { id: 4, text: "Chloroplast", isCorrect: false },
+      103: { id: 6, text: "Impermeable membrane", isCorrect: false },
+      104: { id: 7, text: "Cellulose", isCorrect: false },
     };
 
     const { result } = renderHook(() =>
@@ -56,9 +33,10 @@ describe("useCorrectness hook", () => {
 
   test("returns 100% correctness when all answers are correct", () => {
     const selectedAnswers: SelectedAnswers = {
-      1: { id: 1, text: "Cell wall", isCorrect: true },
-      2: { id: 5, text: "Impermeable membrane", isCorrect: true },
-      3: { id: 7, text: "Mitochondria", isCorrect: true },
+      101: { id: 2, text: "Cell wall", isCorrect: true },
+      102: { id: 3, text: "Cytoplasm", isCorrect: true },
+      103: { id: 5, text: "Partially permeable membrane", isCorrect: true },
+      104: { id: 8, text: "Mitochondria", isCorrect: true },
     };
 
     const { result } = renderHook(() =>
@@ -71,16 +49,16 @@ describe("useCorrectness hook", () => {
 
   test("returns partial correctness when some answers are incorrect", () => {
     const selectedAnswers: SelectedAnswers = {
-      1: { id: 1, text: "Cell wall", isCorrect: true },
-      2: { id: 4, text: "Partially permeable membrane", isCorrect: false },
-      3: { id: 7, text: "Mitochondria", isCorrect: true },
+      101: { id: 2, text: "Cell wall", isCorrect: true },
+      102: { id: 4, text: "Partially permeable membrane", isCorrect: false },
+      103: { id: 5, text: "Mitochondria", isCorrect: true },
     };
 
     const { result } = renderHook(() =>
       useCorrectness(selectedAnswers, mockOptions)
     );
 
-    expect(result.current.percentage).toBe(2 / 3);
+    expect(result.current.percentage).toBe(0.5);
     expect(result.current.allCorrect).toBe(false);
   });
 });
