@@ -26,7 +26,7 @@ The questions displayed can be changed by editing the [questionData.json](https:
 ## Extension tasks
 
 - To randomise the questions and answers, I created a simple function to randomise the questions on render, and a useSelectOptions custom hook, that handles initial state, selection and value changing. As an assumption, this will always return the incorrect options (but would be something to clarify).
-- The AnswerOption type is flexible for multiple different choices (supporting 3 and more), but likely some CSS tweaks as only visually tested for 3.
+- The AnswerOption type is flexible for multiple different choices (supporting 3 and more), **unfortunately there is a styling issue with 3 choices at certain viewports, where it does not flex into 3 seperate columns (to fix)**
 - Next question button, to get the next question from the randomised array.
 
 ## Limitations
