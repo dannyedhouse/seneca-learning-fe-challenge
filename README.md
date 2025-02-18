@@ -1,6 +1,7 @@
 # Seneca Frontend Challenge
 
 Using Vite + Node v20
+Deployed to vercel - https://seneca-learning-fe-challenge.vercel.app/
 
 ## Installation
 
@@ -8,7 +9,7 @@ Using Vite + Node v20
 - Run the application with `pnpm run dev` to start the local server.
 - Run the vitest suite with `pnpm run test`
 
-The questions displayed can be changed by editing the questionData.json file.
+The questions displayed can be changed by editing the [questionData.json](https://github.com/dannyedhouse/seneca-learning-fe-challenge/blob/main/public/questionData.json) file.
 
 ## Main dependencies
 
@@ -26,17 +27,17 @@ The questions displayed can be changed by editing the questionData.json file.
 
 - To randomise the questions and answers, I created a simple function to randomise the questions on render, and a useSelectOptions custom hook, that handles initial state, selection and value changing. As an assumption, this will always return the incorrect options (but would be something to clarify).
 - The AnswerOption type is flexible for multiple different choices (supporting 3 and more), but likely some CSS tweaks as only visually tested for 3.
-- Next question button, to get next question from randomised array.
+- Next question button, to get the next question from the randomised array.
 
 ## Limitations
 
-- It proved challenging to adjust each switch to be horizontal/vertical, eventually finding a way using just css/flex (but this needs slightly adjustment as at very specific point can overlap slightly).
+- It proved challenging to adjust each switch to be horizontal/vertical, eventually finding a way using just css/flex (but this needs a slight adjustment as at very specific point it can overlap slightly).
 
 ## Future improvements
 
-- More test coverage; specificially testing all untested utils, and more tests around the randomisation (like re-rendering, order should be different). I would also try and test the ResizeObserver usage (test isWrapped set correctly, framer adjusts accordingly).
+- More test coverage; specifically testing all untested utils, and more tests around the randomisation (like re-rendering, order should be different). I would also try and test the ResizeObserver usage (test isWrapped set correctly, framer adjusts accordingly).
 - Review types and handling - for example in my tests I am forcing values to be non-null, even though this is safe due to using mock data, the component null handling could maybe be improved.
-- Better CSS - e.g. using variables or mixins (colour pallette, consistent hover states etc.)
+- Better CSS - e.g. using variables or mixins (colour palette, consistent hover states etc.)
 
 ---
 
