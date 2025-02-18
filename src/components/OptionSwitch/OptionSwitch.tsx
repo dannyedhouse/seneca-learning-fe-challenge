@@ -46,7 +46,9 @@ export const OptionSwitch = ({
 
   return (
     <div
-      className="border-2 border-white border-opacity-20 relative flex flex-wrap gap-2 rounded-full w-full"
+      className={`border-2 border-white border-opacity-20 relative flex flex-wrap gap-2 ${
+        isWrapped ? "rounded-3xl" : "rounded-full"
+      } w-full`}
       style={{ maxWidth }}
       ref={containerRef}
     >
@@ -56,8 +58,10 @@ export const OptionSwitch = ({
           <button
             key={choice.id}
             onClick={() => onToggle(choice)}
-            className="relative z-10 text-center px-4 py-4 font-semibold transition-all 
-               text-[18px] md:text-2xl flex-[1_1_auto]"
+            className={`relative z-10 text-center px-4 py-4 font-semibold transition-all 
+               text-[18px] md:text-2xl flex-[1_1_auto] ${
+                 !isActive && "hover:opacity-70"
+               }`}
             style={{ color: isActive ? activeTextColor : "rgb(255, 255, 255)" }}
             disabled={allCorrect}
           >
@@ -66,7 +70,15 @@ export const OptionSwitch = ({
         );
       })}
       <motion.div
-        className="absolute bg-white/40 rounded-full z-0"
+        className={`absolute bg-white/40 z-0 ${
+          isWrapped
+            ? selectedIndex === 0
+              ? "rounded-t-3xl"
+              : selectedIndex === choices.length - 1
+              ? "rounded-b-3xl"
+              : ""
+            : "rounded-full"
+        }`}
         style={{
           width: isWrapped ? "100%" : `${100 / choices.length}%`,
           height: isWrapped ? `${100 / choices.length}%` : "100%",

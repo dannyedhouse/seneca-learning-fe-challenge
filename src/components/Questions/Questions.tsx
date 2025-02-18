@@ -41,14 +41,17 @@ export const Questions = () => {
     );
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError)
+  if (isLoading || isError || !randomizedQuestions.length) {
     return (
-      <div className="text-red-700">
-        Error loading question data. Please try again later!
+      <div className="text-red-700 h-screen flex items-center justify-center text-xl font-semibold ">
+        {isLoading
+          ? "Loading..."
+          : isError
+          ? "Error loading question data. Please try again later!"
+          : "No questions available"}
       </div>
     );
-  if (!randomizedQuestions.length) return <p>No questions available</p>;
+  }
 
   const gradientStyle = getGradientStyle(percentage);
   const textColor = getTextColor(percentage);
@@ -75,7 +78,7 @@ export const Questions = () => {
       </h2>
       <button
         onClick={goToNextQuestion}
-        className="m-8 rounded-full px-6 py-4 bg-white/40 hover:bg-white/50 text-white font-semibold text-lg"
+        className="text-sm m-8 rounded-full px-6 py-4 bg-white/40 hover:bg-white/30 text-white font-semibold md:text-lg"
       >
         Next Question
       </button>
