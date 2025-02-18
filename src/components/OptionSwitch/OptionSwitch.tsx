@@ -46,6 +46,7 @@ export const OptionSwitch = ({
 
   return (
     <div
+      data-testid="option-switch"
       className={`border-2 border-white border-opacity-20 relative flex flex-wrap gap-2 ${
         isWrapped ? "rounded-3xl" : "rounded-full"
       } w-full`}
