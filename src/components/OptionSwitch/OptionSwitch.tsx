@@ -61,7 +61,7 @@ export const OptionSwitch = ({
             onClick={() => onToggle(choice)}
             className={`relative z-10 text-center px-4 py-4 font-semibold transition-all 
                text-[18px] md:text-2xl flex-[1_1_auto] ${
-                 !isActive && "hover:opacity-70"
+                 !isActive && !allCorrect && "hover:opacity-70"
                }`}
             style={{ color: isActive ? activeTextColor : "rgb(255, 255, 255)" }}
             disabled={allCorrect}

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
-import { getRandomisedQuestions } from "../getRandomisedQuestions";
-import { mockQuestions } from "../../__mocks__/mockData";
-import { QuestionData } from "../../types";
+import { mockQuestions } from "../__mocks__/mockData";
+import { QuestionData } from "../types";
+import { getRandomisedQuestions } from "./getRandomisedQuestions";
 
 describe("getRandomisedQuestions", () => {
   it("returns empty array when data is undefined", () => {
